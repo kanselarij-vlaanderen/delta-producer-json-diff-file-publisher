@@ -1,9 +1,8 @@
-import { updateSudo as update } from '@lblod/mu-auth-sudo';
 import fs from 'fs-extra';
-import { sparqlEscapeDateTime, uuid, query } from 'mu';
+import { sparqlEscapeDateTime, uuid, update, query } from 'mu';
 import {
     FILES_GRAPH,
-    MU_CALL_SCOPE_ID_PUBLICATION_GRAPH_MAINTENANCE, PREFIXES,
+    PREFIXES,
     PRETTY_PRINT_DIFF_JSON, PUBLISHER_URI,
     RELATIVE_FILE_PATH
 } from './env-config';
@@ -84,7 +83,7 @@ export default class DeltaCache {
 
       FILTER (?created > "${since}"^^xsd:dateTime)
     } ORDER BY ?created
-  `);
+  `, { sudo: true });
 
     return result.results.bindings.map(b => {
       return {
@@ -131,6 +130,6 @@ export default class DeltaCache {
           dct:modified ${nowLiteral} .
       }
     }
-  `, { 'mu-call-scope-id': MU_CALL_SCOPE_ID_PUBLICATION_GRAPH_MAINTENANCE });
+  `, { sudo: true });
   }
 }

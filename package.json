@@ -4,7 +4,6 @@
   "type": "module",
   "description": "Microservice to produce delta json diff files based on deltas",
   "dependencies": {
-    "@lblod/mu-auth-sudo": "git://github.com:lblod/mu-auth-sudo.git#bdbd063dc8e4d3a891c713a0077a54bc8a010ca1",
     "fs-extra": "^8.0.1",
     "lodash": "^4.17.11"
   },

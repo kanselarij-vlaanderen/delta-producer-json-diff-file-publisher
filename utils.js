@@ -1,5 +1,4 @@
-import { uuid, sparqlEscapeString, sparqlEscapeUri } from 'mu';
-import { updateSudo as update } from '@lblod/mu-auth-sudo';
+import { update, uuid, sparqlEscapeString, sparqlEscapeUri } from 'mu';
 import { ERROR_URI_PREFIX, PREFIXES, ERROR_GRAPH, ERROR_TYPE, DELTA_ERROR_TYPE } from './env-config.js';
 
 export async function storeError(error){
@@ -18,5 +17,5 @@ export async function storeError(error){
   }
   `;
 
-  await update(queryError);
+  await update(queryError, { sudo: true });
 }

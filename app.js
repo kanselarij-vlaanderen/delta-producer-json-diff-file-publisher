@@ -1,7 +1,6 @@
-import { updateSudo } from '@lblod/mu-auth-sudo';
 import bodyParser from 'body-parser';
 import { chain } from 'lodash';
-import { app, errorHandler, sparqlEscapeUri, uuid } from 'mu';
+import { app, errorHandler, sparqlEscapeUri, uuid, update } from 'mu';
 import DeltaCache from './delta-cache';
 import {
   DELTA_INTERVAL, LOG_INCOMING_DELTA,
@@ -22,25 +21,25 @@ app.post('/login', async function(req, res) {
   try {
 
     // 0. To avoid false sense of security, login only makes sense if accepted key is configured
-    if(!KEY){
-      throw "No key configured in service.";
+    if (!KEY) {
+      throw 'No key configured in service.';
     }
 
     // 1. get environment info
     const sessionUri = req.get('mu-session-id');
 
     // 2. validate credentials
-    if( req.get("key") !== KEY ) {
-      throw "Key does not match";
+    if (req.get('key') !== KEY) {
+      throw 'Key does not match';
     }
 
     // 3. add new login to session
-    updateSudo(`PREFIX muAccount: <http://mu.semte.ch/vocabularies/account/>
+    update(`PREFIX muAccount: <http://mu.semte.ch/vocabularies/account/>
       INSERT DATA {
         GRAPH <http://mu.semte.ch/graphs/diff-producer/login> {
           ${sparqlEscapeUri(sessionUri)} muAccount:account <http://services.lblod.info/diff-consumer/account>.
         }
-      }`);
+      }`, { sudo: true });
 
     // 4. request login recalculation
     return res
@@ -58,7 +57,7 @@ app.post('/login', async function(req, res) {
   }
   catch (e) {
     console.error(e);
-    return res.status(500).send({ message: "Something went wrong" });
+    return res.status(500).send({ message: 'Something went wrong' });
   }
 });
 
