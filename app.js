@@ -3,10 +3,6 @@ import { app, errorHandler, sparqlEscapeUri, uuid, update } from 'mu';
 import DeltaCache from './delta-cache';
 import { DELTA_INTERVAL, LOG_INCOMING_DELTA, KEY } from './env-config';
 
-app.use( bodyParser.json({
-  type: function(req) { return /^application\/json/.test( req.get('content-type') ); },
-  limit: '500mb' }));
-
 const cache = new DeltaCache();
 let hasTimeout = null;
 
@@ -56,7 +52,7 @@ app.post('/login', async function(req, res) {
   }
 });
 
-app.post('/delta', async function( req, res ) {
+app.post('/delta', bodyParser.json({ limit: '500mb' }), async function( req, res ) {
   const delta = req.body;
 
   if (delta.length) {
