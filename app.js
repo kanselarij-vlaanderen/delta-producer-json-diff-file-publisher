@@ -19,14 +19,10 @@ app.post('/delta', bodyParser.json({ limit: '500mb' }), async function( req, res
     if (LOG_INCOMING_DELTA)
       console.log(`Receiving delta ${JSON.stringify(delta)}`);
 
-    const processDelta = async function () {
-      cache.push(...delta);
+    cache.push(...delta);
 
-      if (!hasTimeout)
-        triggerTimeout();
-    };
-
-    processDelta();  // execute async
+    if (!hasTimeout)
+      triggerTimeout();
   }
 
   res.status(202).send();
