@@ -3,10 +3,6 @@
   "version": "0.6.0",
   "type": "module",
   "description": "Microservice to produce delta json diff files based on deltas",
-  "dependencies": {
-    "fs-extra": "^8.0.1"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

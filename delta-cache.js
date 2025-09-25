@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import * as fs from 'node:fs/promises'
 import { sparqlEscapeDateTime, uuid, update, query } from 'mu';
 import {
   FILES_GRAPH,
@@ -40,7 +40,7 @@ export default class DeltaCache {
         const date = new Date();
         const dayFormatted = date.toISOString().substring(0, 'YYYY-MM-dd'.length);
         const outputDirectory = `${SHARE_FOLDER}/${RELATIVE_FILE_PATH}/${dayFormatted}`;
-        fs.mkdirSync(outputDirectory, { recursive: true });
+        await fs.mkdir(outputDirectory, { recursive: true });
         const filename = `delta-${date.toISOString()}.json`;
         const filepath = `${outputDirectory}/${filename}`;
 
