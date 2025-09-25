@@ -5,7 +5,8 @@ import {
   PREFIXES,
   PRETTY_PRINT_DIFF_JSON,
   PUBLISHER_URI,
-  RELATIVE_FILE_PATH
+  RELATIVE_FILE_PATH,
+  MAX_DELTA_FILES_PER_REQUEST
 } from './env-config';
 import { storeError } from './utils';
 
@@ -83,7 +84,7 @@ export default class DeltaCache {
       ?file nie:dataSource ?s .
 
       FILTER (?created > "${since}"^^xsd:dateTime)
-    } ORDER BY ?created
+    } ORDER BY ?created LIMIT ${MAX_DELTA_FILES_PER_REQUEST}
   `, { sudo: true });
 
     return result.results.bindings.map(b => {

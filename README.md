@@ -45,7 +45,7 @@ docker compose restart delta-notifier
 
 ## How-to guides
 ### How to require authentication to access the delta files
-If you don't want the delta files to be publicly available, you can protect them by configuring a secret key on the service. The key need to be provided by the consumer in order to authenticate. Access to the delta files is then configured in [mu-authorization](https://github.com/mu-semtech/sparql-parser).
+If you don't want the delta files to be publicly available, you can protect them by configuring a secret key on the service. The key needs to be provided by the consumer in order to authenticate. Access to the delta files can then be configured in [mu-authorization](https://github.com/mu-semtech/sparql-parser).
 
 First, configure a secret key via the `KEY` environment variable
 
@@ -100,9 +100,10 @@ Your delta files are now only accessible to users that have authenticated with t
 ## Reference
 ### Configuration
 The following enviroment variables can be optionally configured:
-* **`PUBLISHER_URI`** (default: `http://data.lblod.info/services/delta-producer-json-diff-file-publisher`): URI of the publisher that will be associated with the produced delta files. Required if you have multiple delta-producers running in your stack, in order to be able to distinguish them.
+* **`PUBLISHER_URI`** (default: `http://data.lblod.info/services/delta-producer-json-diff-file-publisher`): URI of the publisher that will be associated with the produced delta files. Required if you have multiple delta-producers running in your stack, in order to be able to distinguish between them.
 * **`KEY`** (default: none): Secret key to be provided by the consumer in order to authenticate with the producer. See also the `login`-endpoint documentation. Only required if the delta files shouldn't be publicly accessible.
 * **`DELTA_INTERVAL`** (default: `1000`): Interval, in milliseconds, to write the received delta's (if any) to a file
+* **`MAX_DELTA_FILES_PER_REQUEST`** (default: `1000`): Max number of files returned by the `GET /files` endpoint. If there are more files, the remaining files need to be retrieved in a subsequent request.
 * **`FILES_GRAPH`** (default: `http://mu.semte.ch/graphs/public`): graph to store the produced delta files in
 * **`ERROR_GRAPH`** (default: `http://mu.semte.ch/graphs/system/errors`): graph to write errors to
 * **`RELATIVE_FILE_PATH`** (default: `deltas`): relative path inside the `/share` folder to store the produced delta files in. Inside the `RELATIVE_FILE_PATH` folder, the delta files will be organized in subfolders per day.
