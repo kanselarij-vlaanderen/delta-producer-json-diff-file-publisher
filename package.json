@@ -1,7 +1,8 @@
 {
   "name": "delta-producer-json-diff-file-publisher",
   "version": "0.6.0",
-  "description": "Microservice to produce delta json diff files based on notifications from publication graph",
+  "type": "module",
+  "description": "Microservice to produce delta json diff files based on deltas",
   "dependencies": {
     "@lblod/mu-auth-sudo": "git://github.com:lblod/mu-auth-sudo.git#bdbd063dc8e4d3a891c713a0077a54bc8a010ca1",
     "fs-extra": "^8.0.1",
@@ -13,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lblod/delta-producer-json-diff-file-publisher.git"
+    "url": "git+https://github.com/kanselarij-vlaanderen/delta-producer-json-diff-file-publisher.git"
   },
   "author": "redpencil.io",
   "license": "MIT"
