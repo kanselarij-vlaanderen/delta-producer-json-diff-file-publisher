@@ -85,7 +85,7 @@ export default class DeltaCache {
 
       FILTER (?created > "${since}"^^xsd:dateTime)
     } ORDER BY ?created LIMIT ${MAX_DELTA_FILES_PER_REQUEST}
-  `, { sudo: true });
+  `);
 
     return result.results.bindings.map(b => {
       return {

@@ -9,6 +9,7 @@ services:
   delta-producer:
     image: kanselarij/delta-producer-json-diff-file-publisher
     environment:
+      ALLOW_MU_AUTH_SUDO: "true"
       PUBLISHER_URI: "http://a/unique/name/for/this/service/in/the/stack"
     volumes:
       - ./data/files:/share
