@@ -1,17 +1,17 @@
 import { update, uuid, sparqlEscapeString, sparqlEscapeUri } from 'mu';
-import { ERROR_URI_PREFIX, PREFIXES, ERROR_GRAPH, ERROR_TYPE, DELTA_ERROR_TYPE } from './env-config.js';
+import { PREFIXES, ERROR_GRAPH } from './env-config.js';
 
 export async function storeError(error){
   const id = uuid();
-  const uri = ERROR_URI_PREFIX + id;
+  const uri = 'http://redpencil.data.gift/id/publication-maintenance/error/' + id;
 
   const queryError = `
   ${PREFIXES}
 
   INSERT DATA {
     GRAPH ${sparqlEscapeUri(ERROR_GRAPH)}{
-      ${sparqlEscapeUri(uri)} a ${sparqlEscapeUri(ERROR_TYPE)}, ${sparqlEscapeUri(DELTA_ERROR_TYPE)};
-        mu:uuid ${sparqlEscapeString(id)};
+      ${sparqlEscapeUri(uri)} a <http://open-services.net/ns/core#Error>, <http://redpencil.data.gift/vocabularies/deltas/Error> ;
+        mu:uuid ${sparqlEscapeString(id)} ;
         oslc:message ${sparqlEscapeString(error.message || error)}.
     }
   }

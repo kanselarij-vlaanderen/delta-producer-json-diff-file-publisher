@@ -4,8 +4,7 @@
   "type": "module",
   "description": "Microservice to produce delta json diff files based on deltas",
   "dependencies": {
-    "fs-extra": "^8.0.1",
-    "lodash": "^4.17.11"
+    "fs-extra": "^8.0.1"
   },
   "devDependencies": {},
   "scripts": {

@@ -1,10 +1,11 @@
 import fs from 'fs-extra';
 import { sparqlEscapeDateTime, uuid, update, query } from 'mu';
 import {
-    FILES_GRAPH,
-    PREFIXES,
-    PRETTY_PRINT_DIFF_JSON, PUBLISHER_URI,
-    RELATIVE_FILE_PATH
+  FILES_GRAPH,
+  PREFIXES,
+  PRETTY_PRINT_DIFF_JSON,
+  PUBLISHER_URI,
+  RELATIVE_FILE_PATH
 } from './env-config';
 import { storeError } from './utils';
 
@@ -52,12 +53,12 @@ export default class DeltaCache {
         console.log(`Delta cache has been written to file. Cache contained ${cachedArray.length} items.`);
 
         await this.writeFileToStore(filename, filepath);
-        console.log("File is persisted in store and can be consumed now.");
+        console.log('File is persisted in store and can be consumed now.');
       } catch (e) {
         await storeError(e);
       }
     } else {
-      console.log("Empty cache. Nothing to save on disk");
+      console.log('Empty cache. Nothing to save on disk');
     }
   }
 

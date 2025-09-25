@@ -1,12 +1,7 @@
 import bodyParser from 'body-parser';
-import { chain } from 'lodash';
 import { app, errorHandler, sparqlEscapeUri, uuid, update } from 'mu';
 import DeltaCache from './delta-cache';
-import {
-  DELTA_INTERVAL, LOG_INCOMING_DELTA,
-  LOG_OUTGOING_DELTA, KEY
-} from './env-config';
-import { storeError } from './utils';
+import { DELTA_INTERVAL, LOG_INCOMING_DELTA, KEY } from './env-config';
 
 app.use( bodyParser.json({
   type: function(req) { return /^application\/json/.test( req.get('content-type') ); },
@@ -62,38 +57,20 @@ app.post('/login', async function(req, res) {
 });
 
 app.post('/delta', async function( req, res ) {
-  try {
-    const delta = req.body;
+  const delta = req.body;
 
-    const extractedDelta = extractDeltaToSerialize(delta);
+  if (delta.length) {
+    if (LOG_INCOMING_DELTA)
+      console.log(`Receiving delta ${JSON.stringify(delta)}`);
 
-    if(extractedDelta.length) {
+    const processDelta = async function () {
+      cache.push(...delta);
 
-      if (LOG_INCOMING_DELTA)
-        console.log(`Receiving delta ${JSON.stringify(extractedDelta)}`);
+      if (!hasTimeout)
+        triggerTimeout();
+    };
 
-      const processDelta = async function() {
-        try {
-          if (LOG_OUTGOING_DELTA)
-            console.log(`Pushing onto cache ${JSON.stringify(extractedDelta)}`);
-
-          cache.push( ...extractedDelta );
-
-          if( !hasTimeout ){
-            triggerTimeout();
-          }
-        }
-        catch(e){
-          console.error(`General error processing delta ${e}`);
-          await storeError(e);
-        }
-      };
-      processDelta();  // execute async
-    }
-  }
-  catch(e){
-    console.error(`General error processing delta notification ${e}`);
-    await storeError(e);
+    processDelta();  // execute async
   }
 
   res.status(202).send();
@@ -107,40 +84,10 @@ app.get('/files', async function( req, res ) {
 
 function triggerTimeout(){
   setTimeout( () => {
-    try {
-      hasTimeout = false;
-      cache.generateDeltaFile();
-    }
-    catch(e){
-      console.error(`Error generating delta file ${e}`);
-      storeError(e);
-    }
+    hasTimeout = false;
+    cache.generateDeltaFile();
   }, DELTA_INTERVAL );
   hasTimeout = true;
-}
-
-/*
- * Extracts deltas related to CRUD of the publication-graph
- * This might be redundant, given proper config from deltanotifier, but consider
- * it as an extra safety-measure.
- */
-function extractDeltaToSerialize(delta){
-  const deletes = chain(delta)
-        .map(c => c.deletes)
-        .flatten()
-        .value();
-
-  const inserts = chain(delta)
-        .map(c => c.inserts)
-        .flatten()
-        .value();
-
-  if(!(inserts.length || deletes.length)){
-    return [];
-  }
-  else {
-    return [ { deletes, inserts } ];
-  }
 }
 
 app.use(errorHandler);
