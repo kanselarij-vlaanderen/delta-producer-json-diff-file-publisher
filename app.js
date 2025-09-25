@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import { app, errorHandler, sparqlEscapeUri, uuid, update } from 'mu';
+import { app, errorHandler, sparqlEscapeUri, uuid, update, beforeExit } from 'mu';
 import DeltaCache from './delta-cache';
 import { DELTA_INTERVAL, LOG_INCOMING_DELTA, KEY } from './env-config';
 
