@@ -6,6 +6,12 @@ import { DELTA_INTERVAL, LOG_INCOMING_DELTA, KEY } from './env-config';
 const cache = new DeltaCache();
 let hasTimeout = null;
 
+beforeExit( async () => {
+  console.log('Persisting delta cache before shutting down...');
+  await cache.generateDeltaFile();
+  console.log("Ready to shutdown");
+});
+
 app.post('/delta', bodyParser.json({ limit: '500mb' }), async function( req, res ) {
   const delta = req.body;
 

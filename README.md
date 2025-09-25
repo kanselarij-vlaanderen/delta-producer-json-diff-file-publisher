@@ -175,6 +175,3 @@ The generated diff files are written to the store according to the [model of the
 | Name      | Predicate       | Range           | Definition                                                                                                                    |
 |-----------|-----------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------|
 | publisher | `dct:publisher` | `rdfs:Resource` | Publisher of the file as configured in `PUBLISHER_URI` |
-
-## Known limitations
-* The service keeps an in-memory cache of delta's to write to a file. If the service is killed before the delta's have been written to a file, the delta's are lost. Hence, shortening the `DELTA_INTERVAL` decreases the chance to loose data on restart.
