@@ -38,28 +38,22 @@ export default class DeltaCache {
 
       try {
         const date = new Date();
-        const dayFormatted = new Intl.DateTimeFormat("en-CA", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).format(new Date(date));
+        const dayFormatted = date.toISOString().substring(0, 'YYYY-MM-dd'.length);
         const outputDirectory = `${SHARE_FOLDER}/${RELATIVE_FILE_PATH}/${dayFormatted}`;
         fs.mkdirSync(outputDirectory, { recursive: true });
         const filename = `delta-${date.toISOString()}.json`;
         const filepath = `${outputDirectory}/${filename}`;
 
-        if(PRETTY_PRINT_DIFF_JSON){
-          await fs.writeFile(filepath, JSON.stringify( cachedArray, null, 2 ));
-        }
-        else {
-          await fs.writeFile(filepath, JSON.stringify( cachedArray ));
+        if (PRETTY_PRINT_DIFF_JSON) {
+          await fs.writeFile(filepath, JSON.stringify(cachedArray, null, 2));
+        } else {
+          await fs.writeFile(filepath, JSON.stringify(cachedArray));
         }
 
         console.log(`Delta cache has been written to file. Cache contained ${cachedArray.length} items.`);
 
         await this.writeFileToStore(filename, filepath);
         console.log("File is persisted in store and can be consumed now.");
-
       } catch (e) {
         await storeError(e);
       }
@@ -112,7 +106,7 @@ export default class DeltaCache {
     const virtualFileUri = `http://data.lblod.info/files/${virtualFileUuid}`;
     const nowLiteral = sparqlEscapeDateTime(new Date());
     const physicalFileUuid = uuid();
-    const physicalFileUri = `share://${RELATIVE_FILE_PATH}/${filename}`;
+    const physicalFileUri = filepath.replace(SHARE_FOLDER, 'share://');
 
     await update(`
     ${PREFIXES}
