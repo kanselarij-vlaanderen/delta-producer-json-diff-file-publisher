@@ -107,7 +107,7 @@ export default class DeltaCache {
     const virtualFileUri = `http://data.lblod.info/files/${virtualFileUuid}`;
     const nowLiteral = sparqlEscapeDateTime(new Date());
     const physicalFileUuid = uuid();
-    const physicalFileUri = filepath.replace(SHARE_FOLDER, 'share://');
+    const physicalFileUri = filepath.replace(`${SHARE_FOLDER}/`, 'share://');
 
     await update(`
     ${PREFIXES}
