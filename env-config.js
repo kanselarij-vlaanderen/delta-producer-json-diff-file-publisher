@@ -5,7 +5,7 @@ export const RELATIVE_FILE_PATH = process.env.RELATIVE_FILE_PATH || 'deltas';
 export const PUBLISHER_URI = process.env.PUBLISHER_URI || 'http://data.lblod.info/services/delta-producer-json-diff-file-publisher';
 export const PRETTY_PRINT_DIFF_JSON = process.env.PRETTY_PRINT_DIFF_JSON == 'true';
 export const ERROR_GRAPH = process.env.ERROR_GRAPH || 'http://mu.semte.ch/graphs/system/errors';
-export const FILES_GRAPH = process.env.FILES_GRAPH || 'http://mu.semte.ch/graphs/public';
+export const FILES_GRAPH = process.env.FILES_GRAPH || 'http://mu.semte.ch/graphs/delta-files';
 export const KEY = process.env.KEY || '';
 
 export const PREFIXES = `

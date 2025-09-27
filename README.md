@@ -105,7 +105,7 @@ The following enviroment variables can be optionally configured:
 * **`KEY`** (default: none): Secret key to be provided by the consumer in order to authenticate with the producer. See also the `login`-endpoint documentation. Only required if the delta files shouldn't be publicly accessible.
 * **`DELTA_INTERVAL_MS`** (default: `1000`): Interval, in milliseconds, to write the received delta's (if any) to a file
 * **`MAX_DELTA_FILES_PER_REQUEST`** (default: `1000`): Max number of files returned by the `GET /files` endpoint. If there are more files, the remaining files need to be retrieved in a subsequent request.
-* **`FILES_GRAPH`** (default: `http://mu.semte.ch/graphs/public`): graph to store the produced delta files in
+* **`FILES_GRAPH`** (default: `http://mu.semte.ch/graphs/delta-files`): graph to store the produced delta files in
 * **`ERROR_GRAPH`** (default: `http://mu.semte.ch/graphs/system/errors`): graph to write errors to
 * **`RELATIVE_FILE_PATH`** (default: `deltas`): relative path inside the `/share` folder to store the produced delta files in. Inside the `RELATIVE_FILE_PATH` folder, the delta files will be organized in subfolders per day.
 
