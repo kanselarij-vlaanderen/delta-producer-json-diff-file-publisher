@@ -7,7 +7,7 @@ Add the following snippet to `docker-compose.yml`:
 ```yaml
 services:
   delta-producer:
-    image: kanselarij/delta-producer-json-diff-file-publisher
+    image: kanselarij/delta-producer-json-diff-file-publisher:1.0.0
     environment:
       ALLOW_MU_AUTH_SUDO: "true"
       PUBLISHER_URI: "http://a/unique/name/for/this/service/in/the/stack"
