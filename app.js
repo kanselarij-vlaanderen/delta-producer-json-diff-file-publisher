@@ -28,10 +28,17 @@ app.post('/delta', bodyParser.json({ limit: '500mb' }), async function( req, res
   res.status(202).send();
 });
 
-app.get('/files', async function( req, res ) {
+app.get('/files', async function(req, res, next) {
   const since = req.query.since || new Date().toISOString();
-  const files = await cache.getDeltaFiles(since);
-  res.json({ data: files });
+  try {
+    const files = await cache.getDeltaFiles(since);
+    res.json({ data: files });
+  } catch (e) {
+    console.error(e);
+    const error = new Error('Something went wrong')
+    error.status = 500;
+    next(error);
+  }
 });
 
 app.post('/login', async function(req, res, next) {
