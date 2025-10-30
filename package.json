@@ -1,6 +1,6 @@
 {
   "name": "delta-producer-json-diff-file-publisher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Microservice to produce delta json diff files based on deltas",
   "scripts": {
