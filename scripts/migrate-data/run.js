@@ -37,8 +37,7 @@ INSERT {
     BIND(STRAFTER(STRBEFORE(STR(?shareUri), "T"), "delta-") as ?day)
     BIND(IRI(REPLACE(STR(?shareUri), "share://deltas/delta-", CONCAT("share://deltas/", ?day, "/delta-"))) as ?newShareUri)
   }
-}
-LIMIT 1`);
+}`);
 
 const predicates = [
   'http://purl.org/dc/terms/created',
